@@ -1,0 +1,374 @@
+#: import MeshLinePlot kivy.garden.graph.MeshLinePlot
+<Runner>:
+	#Handling the gesture event.
+	on_two_left_to_right_line:   app.root.transition.direction = 'right'
+	on_two_right_to_left_line:  app.root.transition.direction = 'left'
+	on_two_down_to_up_line:  app.root.transition.direction = 'up'
+# Layout the Screen Manager
+<NuclearScreenManager>:
+	id: manager
+	MenuScreen:	
+	NuclearControlPanel:
+	KnobScreen:
+	MyPanel:
+
+# Layout the Menu screen
+<MenuScreen>:
+	name: 'menu'
+
+	BoxLayout:
+		orientation: 'vertical'
+		Label:
+			text:'Welcome to the Menu!'
+			font_size:50
+		BoxLayout:
+			
+			Button:
+				text:'Nuclear Control Panel'
+				font_size:30
+				on_release:app.root.current ='ncp'
+			Button:
+				text:'Knob Panel'
+				font_size:30
+				on_release:app.root.current ='knob'
+			Button:
+				text:'Real Panel'
+				font_size:30
+				on_release:app.root.current ='panel1'
+# Layout the NCP screen		
+<NuclearControlPanel>:
+
+	name: 'ncp'
+
+	FloatLayout:
+		BoxLayout:
+			orientation:'vertical'
+
+			GridLayout:
+				cols: 4
+				rows: 1
+				spacing: 70, 40 
+			##################################################################Light Line#######################################################################
+				Light_indicator:	
+					id:warning1
+					num:3
+					color1:'green'
+					color2:'yellow'
+					color3:'red'
+					setting: False
+					pos_l1: [25,100]
+					pos_l2: [100,100]
+					pos_l3: [175,100]
+				Light_indicator:	
+					id:warning2
+					num:3
+					color1:'green'
+					color2:'yellow'
+					color3:'red'
+					setting: False
+					pos_l1: [25,100]
+					pos_l2: [100,100]
+					pos_l3: [175,100]
+				Light_indicator:	
+					id:warning3
+					num:3
+					color1:'green'
+					color2:'yellow'
+					color3:'red'
+					setting: False
+					pos_l1: [25,100]
+					pos_l2: [100,100]
+					pos_l3: [175,100]
+				Light_indicator:
+					num:3	
+					id:warning4
+					color1:'green'
+					color2:'yellow'
+					color3:'red'
+					setting: False
+					pos_l1: [25,100]
+					pos_l2: [100,100]
+					pos_l3: [175,100]
+
+			GridLayout:
+				cols: 4
+				rows: 1
+				spacing: 70, 40 
+
+
+
+
+	
+
+			##################################################################Gauge Line###########################################################
+				Gauge:
+					id: gauge1
+					value:knob1.value
+					max: 50
+					file_gauge:"~/.kivy/garden/garden.gauge/cadran.png"
+				Gauge:
+					id: gauge2
+					file_gauge:"~/.kivy/garden/garden.gauge/cadran.png"
+					value:knob2.value
+
+				Gauge:
+					id: gauge3
+					value:knob3.value
+					file_gauge:"~/.kivy/garden/garden.gauge/cadran.png"
+				Gauge:
+					id: gauge4
+					value:knob4.value
+					file_gauge:"~/.kivy/garden/garden.gauge/cadran.png"
+			##################################################################Knob Line###########################################################
+			GridLayout:
+				center:
+				cols: 4
+				rows: 1
+				spacing: 300, 40 
+						
+				Knob:
+					id: knob1
+					size:150,150
+					value: 0
+					min: 0
+					max: 100
+					step: 1
+					knobimg_source: "/usr/lib/python2.7/dist-packages/kivy/garden/knob/img/knob_metal.png"
+					knobimg_size: 1
+					show_label: False
+					show_marker: False
+
+				Knob:
+					id: knob2
+					size: 150,150
+					value: 0
+					min: 0
+					max: 100
+					step: 1
+					knobimg_source: "/usr/lib/python2.7/dist-packages/kivy/garden/knob/img/knob_metal.png"
+					knobimg_size: 1
+					show_label: False
+					show_marker: False
+				Knob:
+					id: knob3
+					size:150,150
+					value: 0
+					min: 0
+					max: 100
+					step: 1
+					knobimg_source: "/usr/lib/python2.7/dist-packages/kivy/garden/knob/img/knob_metal.png"
+					knobimg_size: 0.9
+					show_label: False
+					show_marker: False
+				Knob:
+					id: knob4
+					size:150,150
+					value: 0
+					min: 0
+					max: 100
+					step: 1
+					knobimg_source: "/usr/lib/python2.7/dist-packages/kivy/garden/knob/img/knob_metal.png"
+					knobimg_size: 0.9
+					show_label: False
+					show_marker: False
+
+			##################################################################Label Line###########################################################
+			GridLayout:
+				cols: 4
+				rows: 1
+				spacing: 70, 40 
+				Label:
+					id: PowerLabel
+					text:'Power'
+					font_size:30
+
+
+
+				Label:
+					id: RaiseLabel
+					text:'Raise'
+					font_size:30
+				Label:
+					id: LowerLabel
+					text:'Lower'
+					font_size:30
+				Label:
+					id: TurboLabel
+					text:'Turbo'
+					font_size:30
+
+			##################################################################Slider Line###########################################################
+#			GridLayout:
+#				cols: 4
+#				rows: 1
+#				spacing: 70, 40 
+#				Slider:
+#					orientation:'vertical'
+#					max: 1
+#					min:0
+#					value:1
+#					cursor_size:[1,0.1]
+#				Slider:
+#					orientation:'vertical'
+#					max: 1
+#					min:0
+#					value:1
+#				Slider:
+#					orientation:'vertical'
+#					max: 1
+#					min:0
+#					value:1
+#				Slider:
+#					orientation:'vertical'
+#					max: 1
+#					min:0
+#					value:1
+
+
+			BoxLayout:
+
+				Button:
+					id: Stop_button
+					size_hint:1,1
+					text: 'Scram!!!'
+					font_size: 30
+					on_press:root.stop()
+					pos: 900,0
+					canvas:
+						Color:
+							rgba: 1, 0, 0, 0.5
+						Rectangle:
+							size: self.size
+							pos: self.pos
+				Button:
+					id:menubuttonnuke
+					size_hint:1,1
+					text: 'Menu'
+					font_size: 30
+					on_release: app.root.current ='menu'
+
+
+
+	Runner: 
+		on_two_down_to_up_line: app.root.current = 'menu'
+		on_two_right_to_left_line: app.root.current = 'knob'
+		on_two_left_to_right_line: app.root.current = 'panel1'
+
+
+
+	
+<KnobScreen>:
+	name: 'knob'
+	Runner: 
+		on_two_down_to_up_line: app.root.current = 'menu'
+		on_two_left_to_right_line: app.root.current = 'ncp'
+	BoxLayout:
+		orientation: 'vertical'
+
+		Gauge: 
+			value: knob1.value
+			file_gauge:"~/.kivy/garden/garden.gauge/cadran.png"
+		BoxLayout:
+			Knob:
+				id: knob1
+				size: 100, 100
+				value: 0
+				min: 0
+				max:100
+				step: 1
+				knobimg_source: "/usr/lib/python2.7/dist-packages/kivy/garden/knob/img/knob_metal.png"
+				knobimg_size: 0.9
+				show_label: True
+				show_marker: True
+				
+			Label:
+				id:label
+				text: str(knob1.value)
+		BoxLayout:
+			size_hint:[1,0.5]
+			Label:
+				text:""
+
+			Button:
+				id: Start_button
+				size_hint:[1, 1]
+				text: 'Start!!!'
+				font_size: 30
+				on_press:root.start()
+
+				canvas:
+					Color:
+						rgba: 0, 1, 0, 0.5
+					Rectangle:
+						size: self.size
+						pos: self.pos
+			Button:
+				id: Stop_button
+				size_hint:[1, 1]
+				text: 'SCRAM!!!'
+				font_size: 30
+				on_press:root.stop()
+
+				canvas:
+					Color:
+						rgba: 1, 0, 0, 0.5
+					Rectangle:
+						size: self.size
+						pos: self.pos
+			Button:
+				id:menubuttonknob
+				size_hint:[1, 1]
+				text: 'Menu'
+				font_size: 30
+				on_release: app.root.current ='menu'
+
+
+
+<MyPanel>:
+	name:'panel1'
+	Runner: 
+		on_two_down_to_up_line: app.root.current = 'menu'
+		on_two_right_to_left_line: app.root.current = 'ncp'
+	BoxLayout:
+		Gauge:
+			id: gauge1
+			value:knob.value
+			file_gauge:"~/.kivy/garden/garden.gauge/cadran.png"
+		Light_indicator:	
+			id:warning1
+			orientation: 'vertical'
+			size_lights: [30,30]
+			num:3
+			color1:'green'
+			color2:'yellow'
+			color3:'red'
+			setting: False
+			pos_l1: [100,175]
+			pos_l2: [100,100]
+			pos_l3: [100,25]
+		Gauge:
+			id: gauge2
+			value:knob.value
+			file_gauge:"~/.kivy/garden/garden.gauge/cadran.png"
+
+
+		Knob:
+			id: knob
+			size:150,150
+			value: 0
+			min: 0
+			max: 100
+			step: 1
+			knobimg_source: "/usr/lib/python2.7/dist-packages/kivy/garden/knob/img/knob_metal.png"
+			knobimg_size: 0.9
+			show_label: False
+			show_marker: False
+
+		Gauge:
+			id: gauge3
+			value:knob.value
+			file_gauge:"~/.kivy/garden/garden.gauge/cadran.png"
+
+
+
+

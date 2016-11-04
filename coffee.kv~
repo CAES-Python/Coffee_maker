@@ -1,0 +1,74 @@
+#: import MeshLinePlot kivy.garden.graph.MeshLinePlot
+<Runner>:
+	#Handling the gesture event.
+	on_two_left_to_right_line:   app.root.transition.direction = 'right'
+	on_two_right_to_left_line:  app.root.transition.direction = 'left'
+	on_two_down_to_up_line:  app.root.transition.direction = 'up'
+# Layout the Screen Manager
+<CoffeeScreenManager>:
+	id: manager
+	MenuScreen:	
+
+	MyPanel:
+
+# Layout the Menu screen
+<MenuScreen>:
+	name: 'menu'
+
+	BoxLayout:
+		orientation: 'vertical'
+		Label:
+			text:'Welcome to the Menu!'
+			font_size:50
+		BoxLayout:
+			
+			Button:
+				text:'Coffee Maker'
+				font_size:30
+				on_release:app.root.current ='coffee'
+
+# Layout the NCP screen		
+
+<MyPanel>:
+	name:'coffee'
+	Runner: 
+		on_two_down_to_up_line: app.root.current = 'menu'
+		
+	BoxLayout:
+		orientation: 'vertical'
+		BoxLayout:
+			Light_indicator:	
+				id:warning1
+				orientation: 'vertical'
+				size_lights: [30,30]
+				num:3
+				color1:'green'
+				color2:'yellow'
+				color3:'red'
+				bol1: True
+				setting: False
+				pos_l1: [100,175]
+				pos_l2: [100,100]
+				pos_l3: [100,25]
+			Gauge:
+				id: gauge2
+				file_gauge:"~/.kivy/garden/garden.gauge/cadran.png"
+
+		BoxLayout:
+			Button:
+				text: 'Brew!'
+				font_size: 30
+			Button:
+				text: 'Stop!'
+				font_size: 30
+				canvas:
+					Color:
+						rgba: 1,0,0,0.4
+					Rectangle:
+						pos:self.pos
+						size: self.size
+
+
+
+
+
