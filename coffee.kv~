@@ -9,7 +9,7 @@
 	id: manager
 	MenuScreen:	
 
-	MyPanel:
+	CoffeeScreen:
 
 # Layout the Menu screen
 <MenuScreen>:
@@ -29,7 +29,7 @@
 
 # Layout the NCP screen		
 
-<MyPanel>:
+<CoffeeScreen>:
 	name:'coffee'
 	Runner: 
 		on_two_down_to_up_line: app.root.current = 'menu'
@@ -41,32 +41,51 @@
 				id:warning1
 				orientation: 'vertical'
 				size_lights: [30,30]
-				num:3
+				num:2
 				color1:'green'
 				color2:'yellow'
 				color3:'red'
 				bol1: True
-				setting: False
+				setting_on: False
+				label_on: True
 				pos_l1: [100,175]
 				pos_l2: [100,100]
 				pos_l3: [100,25]
-			Gauge:
-				id: gauge2
-				file_gauge:"~/.kivy/garden/garden.gauge/cadran.png"
-
-		BoxLayout:
-			Button:
-				text: 'Brew!'
-				font_size: 30
-			Button:
-				text: 'Stop!'
-				font_size: 30
+				l1_label:"Ready"
+				l2_label:"Warming"
+			BoxLayout:
+				
+				
 				canvas:
 					Color:
-						rgba: 1,0,0,0.4
+						rgba: 1,0,0,0.5
 					Rectangle:
+						size:self.size
 						pos:self.pos
-						size: self.size
+				Label:
+					text: "H20 Level"
+					pos_hint: {800, 200}
+				Gauges:
+					id: gauge
+				
+		BoxLayout:
+			BoxLayout:
+				Button:
+					size_hint: None, None
+					size: 200,300
+					text: 'Brew!'
+					font_size: 30
+				Button:
+					size_hint: None, None
+					size: 200,300
+					text: 'Stop!'
+					font_size: 30
+					canvas:
+						Color:
+							rgba: 1,0,0,0.4
+						Rectangle:
+							pos:self.pos
+							size: self.size
 
 
 

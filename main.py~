@@ -22,7 +22,7 @@ from kivy.uix.screenmanager import ScreenManager, Screen
 from kivy.uix.anchorlayout import AnchorLayout
 
 from kivy.garden.knob import Knob
-from kivy.garden.gauge import Gauge
+from kivy.garden.gauges import Gauges
 from kivy.garden.light_indicator import  Light_indicator
 
 from kivy.properties import ListProperty, ObjectProperty
@@ -51,7 +51,7 @@ class CoffeeScreenManager(ScreenManager):
 
 class MenuScreen(Screen):
 	pass
-class MenuScreen(Screen):
+class MyPanel(Screen):
 	pass
 
 
