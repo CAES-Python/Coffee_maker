@@ -51,7 +51,7 @@ class CoffeeScreenManager(ScreenManager):
 
 class MenuScreen(Screen):
 	pass
-class MyPanel(Screen):
+class CoffeeScreen(Screen):
 	pass
 
 

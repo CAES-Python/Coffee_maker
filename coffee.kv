@@ -8,8 +8,8 @@
 <CoffeeScreenManager>:
 	id: manager
 	MenuScreen:	
-
 	CoffeeScreen:
+	ControlScreen:
 
 # Layout the Menu screen
 <MenuScreen>:
@@ -88,6 +88,10 @@
 							size: self.size
 
 
-
+<ControlScreen>:
+	name:'control'
+	Runner: 
+		on_two_down_to_up_line: app.root.current = 'menu'
+		on_two_left_toright_line: app.root.current = 'coffee'
 
 

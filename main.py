@@ -53,7 +53,8 @@ class MenuScreen(Screen):
 	pass
 class CoffeeScreen(Screen):
 	pass
-
+ControlScreen(Screen):
+	pass
 
 #Building the app. The program will look for the file "nuclear.kv" because the app is called Nuclear			
 class CoffeeApp(App):
