@@ -20,6 +20,8 @@ from kivy.uix.gridlayout import GridLayout
 from kivy.uix.slider import Slider
 from kivy.uix.screenmanager import ScreenManager, Screen
 from kivy.uix.anchorlayout import AnchorLayout
+from kivy.uix.checkbox import CheckBox
+from kivy.uix.dropdown import DropDown
 
 from kivy.garden.knob import Knob
 from kivy.garden.gauges import Gauges
@@ -53,7 +55,7 @@ class MenuScreen(Screen):
 	pass
 class CoffeeScreen(Screen):
 	pass
-ControlScreen(Screen):
+class ControlScreen(Screen):
 	pass
 
 #Building the app. The program will look for the file "nuclear.kv" because the app is called Nuclear			

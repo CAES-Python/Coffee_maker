@@ -33,51 +33,190 @@
 	name:'coffee'
 	Runner: 
 		on_two_down_to_up_line: app.root.current = 'menu'
+		on_two_right_to_left_line: app.root.current = 'control'
 		
 	BoxLayout:
 		orientation: 'vertical'
-		BoxLayout:
-			Light_indicator:	
-				id:warning1
-				orientation: 'vertical'
-				size_lights: [30,30]
-				num:2
-				color1:'green'
-				color2:'yellow'
-				color3:'red'
-				bol1: True
-				setting_on: False
-				label_on: True
-				pos_l1: [100,175]
-				pos_l2: [100,100]
-				pos_l3: [100,25]
-				l1_label:"Ready"
-				l2_label:"Warming"
+		Label: 
+			text: 'Coffee Status'
+			font_size:45
+		
+		GridLayout:
+			rows:2
+			cols:6
 			BoxLayout:
-				
-				
-				canvas:
-					Color:
-						rgba: 1,0,0,0.5
-					Rectangle:
-						size:self.size
-						pos:self.pos
+				orientation: 'vertical'
 				Label:
-					text: "H20 Level"
-					#pos_hint: {800, 200}
-				Gauges:
-					id: gauge
-				
+					text:'Water level'
+					font_size:30
+				Light_indicator:
+					id:water_lv_lights
+					num:3
+					color1:'red'
+					color2:'green'
+					color3:'red'
+					pos_l1: 60,40
+					pos_l2: 135,40
+					pos_l3: 210,40
+					setting_on: False
+					label_on:True
+					l1_label:"Under min"
+					l3_label:"Over Max"
+					bol2:True
+
+			BoxLayout:
+				orientation: 'vertical'
+				Label:
+					text:'Water Temp'
+					font_size:30
+				Label:
+					text: "Some #"
+				BoxLayout:
+					CheckBox:
+						group:"temp"
+						active:True
+					Label:
+						text:"F"
+						halign: 'left'
+					CheckBox:
+						group:"temp"
+					Label:
+						text:"C"
+						
+			BoxLayout:
+				orientation: 'vertical'
+				Label:
+					text:'Altitude Mode'
+					font_size:30
+				Light_indicator:
+					id:altitude_lights
+					num:1
+					color1:'green'
+					pos_l1: 135,40
+					setting_on: False
+					label_on:True
+					l1_label:"On"
+
+
+			BoxLayout:
+				orientation: 'vertical'
+				Label:
+					text:'Air Pump'
+					font_size:30
+				Light_indicator:
+					id:air_pump_lights
+					num:1
+					color1:'green'
+					pos_l1: 135,40
+					setting_on: False
+					label_on:True
+					l1_label:"On"
+
+			BoxLayout:
+				orientation: 'vertical'
+				Label:
+					text:'Water Pump'
+					font_size:30
+				Light_indicator:
+					id:water_pump_lights
+					num:1
+					color1:'green'
+					pos_l1: 135,40
+					setting_on: False
+					label_on:True
+					l1_label:"On"
+
+			BoxLayout:
+				orientation: 'vertical'
+				Label:
+					text:'Water Pumping Volume'
+					font_size:30
+				Label:
+					text:"some #"
+
+			BoxLayout:
+				orientation: 'vertical'
+				Label:
+					text:'Pod Door'
+					font_size:30
+				Light_indicator:
+					id:pod_door_lights
+					num:1
+					color1:'red'
+					pos_l1: 135,40
+					setting_on: False
+					label_on:True
+					l1_label:"Open"
+			BoxLayout:
+				orientation: 'vertical'
+				Label:
+					text:'Pod Present?'
+					font_size:30
+				Light_indicator:
+					id:pod_door_lights
+					num:1
+					color1:'red'
+					pos_l1: 135,40
+					setting_on: False
+					label_on:True
+					l1_label:"Missing"
+
+			BoxLayout:
+				orientation: 'vertical'
+				Label:
+					text:'Pod Color'
+					font_size:30
+				Label:
+					text: "Some Color"
+
+			BoxLayout:
+				orientation: 'vertical'
+				Label:
+					text:'Carafe Present?'
+					font_size:30
+				Light_indicator:
+					id:carafe_lights
+					num:1
+					color1:'red'
+					pos_l1: 135,40
+					setting_on: False
+					label_on:True
+					l1_label:"Missing"
+
+			BoxLayout:
+				orientation: 'vertical'
+				Label:
+					text:'LED Status'
+					font_size:30
+				Light_indicator:
+					id:led_lights
+					num:1
+					color1:'green'
+					pos_l1: 135,40
+					setting_on: False
+					label_on:False
+					
+
+			BoxLayout:
+				orientation: 'vertical'
+				Label:
+					text:'Home Sensor'
+					font_size:30
+				Label:
+					text:"???????"
+
+
+			
 		BoxLayout:
 			BoxLayout:
 				Button:
 					size_hint: None, None
-					size: 200,300
+					size: 200,100
 					text: 'Brew!'
 					font_size: 30
 				Button:
 					size_hint: None, None
-					size: 200,300
+					size: 200,100
 					text: 'Stop!'
 					font_size: 30
 					canvas:
@@ -92,6 +231,6 @@
 	name:'control'
 	Runner: 
 		on_two_down_to_up_line: app.root.current = 'menu'
-		on_two_left_toright_line: app.root.current = 'coffee'
+		on_two_left_to_right_line: app.root.current = 'coffee'
 
 
