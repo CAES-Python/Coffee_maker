@@ -63,6 +63,7 @@
 					l1_label:"Under min"
 					l3_label:"Over Max"
 					bol2:True
+					size_lights:40,40
 
 			BoxLayout:
 				orientation: 'vertical'
@@ -96,7 +97,7 @@
 					setting_on: False
 					label_on:True
 					l1_label:"On"
-
+					size_lights:40,40
 
 			BoxLayout:
 				orientation: 'vertical'
@@ -111,7 +112,7 @@
 					setting_on: False
 					label_on:True
 					l1_label:"On"
-
+					size_lights:40,40
 			BoxLayout:
 				orientation: 'vertical'
 				Label:
@@ -125,7 +126,7 @@
 					setting_on: False
 					label_on:True
 					l1_label:"On"
-
+					size_lights:40,40
 			BoxLayout:
 				orientation: 'vertical'
 				Label:
@@ -147,6 +148,7 @@
 					setting_on: False
 					label_on:True
 					l1_label:"Open"
+					size_lights:40,40
 			BoxLayout:
 				orientation: 'vertical'
 				Label:
@@ -160,7 +162,7 @@
 					setting_on: False
 					label_on:True
 					l1_label:"Missing"
-
+					size_lights:40,40
 			BoxLayout:
 				orientation: 'vertical'
 				Label:
@@ -182,7 +184,7 @@
 					setting_on: False
 					label_on:True
 					l1_label:"Missing"
-
+					size_lights:40,40
 			BoxLayout:
 				orientation: 'vertical'
 				Label:
@@ -195,27 +197,15 @@
 					pos_l1: 135,40
 					setting_on: False
 					label_on:False
-					
+					size_lights:40,40					
 
 			BoxLayout:
 				orientation: 'vertical'
 				Label:
 					text:'Home Sensor'
 					font_size:30
-				Light_indicator:
-					id:water_lv_lights
-					num:3
-					color1:'red'
-					color2:'green'
-					color3:'red'
-					pos_l1: 25,100
-					pos_l2: 100,100
-					pos_l3: 175,100
-					setting_on: False
-					label_on:True
-					l1_label:"Under min"
-					l3_label:"Over Max"
-
+				Label:
+					text:"???????"
 
 
 			
@@ -244,5 +234,176 @@
 	Runner: 
 		on_two_down_to_up_line: app.root.current = 'menu'
 		on_two_left_to_right_line: app.root.current = 'coffee'
+
+	BoxLayout:
+		orientation: 'vertical'
+		BoxLayout:
+			size_hint: 1,0.5
+			Label: 
+				text: 'Coffee Control'
+				font_size:45
+		
+		GridLayout:
+			rows:2
+			cols:6
+			BoxLayout:
+				orientation: 'vertical'
+				Label:
+					text:'Water level'
+					font_size:30
+				BoxLayout:
+					Label:
+						text:""
+					Knob:
+						id:water_lv_knob
+						size: 100, 100
+						min: 0
+						max: 100
+						step: 1
+						value: 0  # Default position of knob.
+						knobimg_source: "/home/nagato/.kivy/garden/garden.knob/img/knob_metal.png"  # Knob texture
+						show_label: True  # Show central label
+						show_marker: False  # Do not show surrounding marker
+					Label:
+						text:str(water_lv_knob.value)
+
+			BoxLayout:
+				orientation: 'vertical'
+				Label:
+					text:'Water Temp'
+					font_size:30
+				Label:
+					text: "Some #"
+						
+			BoxLayout:
+				orientation: 'vertical'
+				Label:
+					text:'Altitude Mode'
+					font_size:30
+				BoxLayout:
+					Button:
+						size_hint:None,None
+						size:100,100
+						text:"On"
+					Button:
+						size_hint:None,None
+						size:100,100
+						text:"Off"
+			BoxLayout:
+				orientation: 'vertical'
+				Label:
+					text:'Air Pump'
+					font_size:30
+				BoxLayout:
+					Button:
+						size_hint:None,None
+						size:100,100
+						text:"On"
+					Button:
+						size_hint:None,None
+						size:100,100
+						text:"Off"
+			BoxLayout:
+				orientation: 'vertical'
+				Label:
+					text:'Water Pump'
+					font_size:30
+				BoxLayout:
+					Button:
+						size_hint:None,None
+						size:100,100
+						text:"On"
+					Button:
+						size_hint:None,None
+						size:100,100
+						text:"Off"
+			BoxLayout:
+				orientation: 'vertical'
+				Label:
+					text:'Water Pumping Volume'
+					font_size:30
+				Spinner:
+					text: "4 oz"
+					values: '4 oz','6 oz','8 oz', '10 oz', '12 oz'
+
+			BoxLayout:
+				orientation: 'vertical'
+				Label:
+					text:'Pod Door'
+					font_size:30
+				BoxLayout:
+					Button:
+						size_hint:None,None
+						size:100,100
+						text:"Open"
+					Button:
+						size_hint:None,None
+						size:100,100
+						text:"Closed"
+			BoxLayout:
+				orientation: 'vertical'
+				Label:
+					text:'Pod Present?'
+					font_size:30
+				BoxLayout:
+					Button:
+						size_hint:None,None
+						size:100,100
+						text:"Present"
+					Button:
+						size_hint:None,None
+						size:100,100
+						text:"Missing"
+			BoxLayout:
+				orientation: 'vertical'
+				Label:
+					text:'Pod Color'
+					font_size:30
+				Label:
+					text: "Some Color"
+
+			BoxLayout:
+				orientation: 'vertical'
+				Label:
+					text:'Carafe Present?'
+					font_size:30
+				BoxLayout:
+					Button:
+						size_hint:None,None
+						size:100,100
+						text:"Present"
+					Button:
+						size_hint:None,None
+						size:100,100
+						text:"Missing"
+			BoxLayout:
+				orientation: 'vertical'
+				Label:
+					text:'LED Status'
+					font_size:30
+				BoxLayout:
+					Button:
+						size_hint:None,None
+						size:100,100
+						text:"Off"
+					Button:
+						size_hint:None,None
+						size:100,100
+						text:"Flashing"	
+					Button:
+						size_hint:None,None
+						size:100,100
+						text:"On"					
+
+			BoxLayout:
+				orientation: 'vertical'
+				Label:
+					text:'Home Sensor'
+					font_size:30
+				Label:
+					text:"???????"
+
+
+			
 
 

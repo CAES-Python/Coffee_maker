@@ -21,7 +21,7 @@ from kivy.uix.slider import Slider
 from kivy.uix.screenmanager import ScreenManager, Screen
 from kivy.uix.anchorlayout import AnchorLayout
 from kivy.uix.checkbox import CheckBox
-from kivy.uix.dropdown import DropDown
+from kivy.uix.spinner import Spinner
 
 from kivy.garden.knob import Knob
 from kivy.garden.gauges import Gauges
