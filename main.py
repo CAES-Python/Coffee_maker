@@ -27,7 +27,7 @@ from kivy.garden.knob import Knob
 from kivy.garden.gauges import Gauges
 from kivy.garden.light_indicator import  Light_indicator
 
-from kivy.properties import ListProperty, ObjectProperty
+from kivy.properties import NumericProperty, BoundedNumericProperty, ListProperty, ObjectProperty, StringProperty
 
 
 
@@ -54,11 +54,13 @@ class CoffeeScreenManager(ScreenManager):
 class MenuScreen(Screen):
 	pass
 class CoffeeScreen(Screen):
-	pass
-'''def __init__(self, **kwargs):
+	cup_size = StringProperty('')
+	h2o_temp = StringProperty('')
+	def __init__(self, **kwargs):
 			
 		super(CoffeeScreen, self).__init__(**kwargs)
-		Clock.schedule_once(self._finish_init,0.5)
+		Clock.schedule_once(self._finish_init)
+		
 
 	def _finish_init(self,dt):
 		self.water_lights=self.ids.water_lv_lights
@@ -90,16 +92,38 @@ class CoffeeScreen(Screen):
 		self.carafe_missing=self.manager.get_screen('control').ids.carafe_missing
 		self.led_off=self.manager.get_screen('control').ids.led_off
 		self.led_on=self.manager.get_screen('control').ids.led_on
-		self.led_flash=self.manager.get_screen('control').ids.led_flash'''
+		self.led_flash=self.manager.get_screen('control').ids.led_flash
+		self.set_temp=self.manager.get_screen('control').set_temp
 
-	
+
+
+	def f_to_c(self):
+
+		if self.ftemp.active==True:
+			self.set_temp= str((self.temp_value -32)/1.8)
+			print "temp is: ",self.set_temp 
+	def c_to_f(self):
+		if self.ctemp.active==True:
+			self.set_temp= str(self.temp_value * 1.8 +32)
+			print "temp is: ",self.set_temp 
 class ControlScreen(Screen):
 	global event
+	size_text=StringProperty("")
+	set_temp = StringProperty("")
+	min=NumericProperty(26)
+	max=NumericProperty(212)
+	fmin=NumericProperty(80)
+	fmax=NumericProperty(212)
+	cmin=NumericProperty(26)
+	cmax=NumericProperty(100)
+	temp_value=NumericProperty(150)
 	def __init__(self, **kwargs):
 		
 		super(ControlScreen, self).__init__(**kwargs)
 		Clock.schedule_once(self._finish_init,0.5)
-
+		Clock.schedule_interval(self.disp_size,0.5)
+		Clock.schedule_interval(self.disp_temp,0.1)
+		Clock.schedule_interval(self.water_level,0.5)
 	def _finish_init(self,dt):
 		self.water_lights=self.manager.get_screen('coffee').ids.water_lv_lights
 		self.temp = self.manager.get_screen('coffee').ids.water_temp_disp
@@ -133,6 +157,8 @@ class ControlScreen(Screen):
 		self.led_on=self.ids.led_on
 		self.led_flash=self.ids.led_flash
 
+
+		#self.water_vol.bind(text=self.disp_size)
 	def alt_mode_on(self):
 		self.alt_light.turn_on_l1()
 	def alt_mode_off(self):
@@ -158,10 +184,17 @@ class ControlScreen(Screen):
 	def remove_carafe(self):
 		self.carafe_light.color1='red'
 	def LED_on(self):
-		self.event.cancel()
+		try:
+			self.event.cancel()
+		except:
+			pass
 		self.led_light.turn_on_l1()
 	def LED_off(self):
-		self.event.cancel()
+		try:
+			self.event.cancel()
+		except:
+			pass
+		
 		self.led_light.turn_off_l1()
 	def LED_flash(self):
 		self.event=Clock.schedule_interval(self.flash,0.1)
@@ -170,12 +203,40 @@ class ControlScreen(Screen):
 			self.led_light.bol1 =False
 		else:
 			self.led_light.bol1=True
-		
+	def disp_size(self,dt):
+		self.size_text=self.sizes.text
+	def water_level(self,dt):
+		self.water_lights=self.manager.get_screen('coffee').ids.water_lv_lights
+		self.water_value=self.ids.water_lv_knob.value 
+		if self.water_value <25:
+			self.water_lights.turn_off_l2()
+			self.water_lights.turn_off_l3()
+			self.water_lights.turn_on_l1()
+			
+		elif self.water_value > 80:
+			self.water_lights.turn_off_l2()
+			self.water_lights.turn_off_l1()
+			self.water_lights.turn_on_l3()
+			
+		else:
+			self.water_lights.turn_off_l1()
+			self.water_lights.turn_off_l3()
+			self.water_lights.turn_on_l2()
+
+	def disp_temp(self,dt):
+		self.set_temp = str(self.temp_value)
+
+	def increase_temp(self):
+		if self.temp_value<self.max:
+			self.temp_value+=1
+	def decrease_temp(self):
+		if self.temp_value>self.min:
+			self.temp_value-=1
 
 #Building the app. The program will look for the file "nuclear.kv" because the app is called Nuclear			
 class CoffeeApp(App):
 	def build(self):
-		Config.set('graphics','fullscreen', 'auto')
+		Config.set('graphics','fullscreen', 1)
 		return CoffeeScreenManager()
 # Run the program
 if __name__ == "__main__":

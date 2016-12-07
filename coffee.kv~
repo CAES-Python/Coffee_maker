@@ -7,10 +7,15 @@
 # Layout the Screen Manager
 <CoffeeScreenManager>:
 	id: manager
-	MenuScreen:	
+	MenuScreen:
+		id:menu	
 	CoffeeScreen:
+		id:coffee
+		cup_size: control.size_text
+		h2o_temp:control.set_temp
 	ControlScreen:
-
+		id:control
+		
 # Layout the Menu screen
 <MenuScreen>:
 	name: 'menu'
@@ -60,7 +65,7 @@
 					pos_l3: 210,40
 					setting_on: False
 					label_on:True
-					l1_label:"Under min"
+					l1_label:"Under Min"
 					l3_label:"Over Max"
 					bol2:True
 					size_lights:40,40
@@ -72,18 +77,20 @@
 					font_size:30
 				Label:
 					id:water_temp_disp
-					text: "Some #"
+					text: root.h2o_temp
 				BoxLayout:
 					CheckBox:
 						id:ftemp
 						group:"temp"
 						active:True
+						on_active:root.c_to_f()
 					Label:
 						text:"F"
 						halign: 'left'
 					CheckBox:
 						id:ctemp
 						group:"temp"
+						on_checkbox_active:root.f_to_c()
 					Label:
 						text:"C"
 						
@@ -98,8 +105,6 @@
 					color1:'green'
 					pos_l1: 135,40
 					setting_on: False
-					label_on:True
-					l1_label:"On"
 					size_lights:40,40
 
 			BoxLayout:
@@ -113,8 +118,6 @@
 					color1:'green'
 					pos_l1: 135,40
 					setting_on: False
-					label_on:True
-					l1_label:"On"
 					size_lights:40,40
 			BoxLayout:
 				orientation: 'vertical'
@@ -136,7 +139,7 @@
 					font_size:30
 				Label:
 					id: water_vol
-					text:"some #"
+					text:root.cup_size
 
 			BoxLayout:
 				orientation: 'vertical'
@@ -273,8 +276,18 @@
 				Label:
 					text:'Water Temp'
 					font_size:30
-				Label:
-					text: "Some #"
+				BoxLayout:
+					orientation:'vertical'
+					Label:
+						id:my_temp
+						text: root.set_temp
+					BoxLayout:
+						Button:
+							text:'-'
+							on_release:root.decrease_temp()
+						Button:
+							text:'+'
+							on_release:root.increase_temp()
 						
 			BoxLayout:
 				orientation: 'vertical'
@@ -339,6 +352,7 @@
 					id:sizes
 					text: "4 oz"
 					values: '4 oz','6 oz','8 oz', '10 oz', '12 oz'
+					#on_release:root.disp_size()
 
 			BoxLayout:
 				orientation: 'vertical'
