@@ -127,6 +127,7 @@ class ControlScreen(Screen):
 		self.carafe_light= self.manager.get_screen('coffee').ids.carafe_light
 		self.led_light= self.manager.get_screen('coffee').ids.led_light
 		self.pod_light= self.manager.get_screen('coffee').ids.pod_light
+		self.home_sensor = self.manager.get_screen('coffee').ids.home_sensor
 		self.water_value=self.ids.water_lv_knob.value 
 		self.alt_on=self.ids.alt_mode_on
 		self.alt_off=self.ids.alt_mode_off
@@ -146,7 +147,6 @@ class ControlScreen(Screen):
 		self.led_on=self.ids.led_on
 		self.led_flash=self.ids.led_flash
 		self.my_temp= self.ids.my_temp
-		self.home_sensor = self.manager.get_screen('coffee').ids.home_sensor
 		self.f_to_c()
 
 

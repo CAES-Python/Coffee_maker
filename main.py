@@ -230,8 +230,6 @@ class ControlScreen(Screen):
 		self.set_ctemp = self.current_ctemp
 		
 		
-		print "set_temp is: ",self.set_ftemp 
-		print "temp_val is: ",self.temp_value 
 		
 	def increase_temp(self):
 
@@ -241,9 +239,7 @@ class ControlScreen(Screen):
 			self.f_to_c()
 			
 
-			
-			print "set_temp is: ",self.set_ftemp 
-			print "temp_value is: ",self.temp_value 
+
 	def decrease_temp(self):
 		
 		if self.temp_value>self.min:
