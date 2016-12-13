@@ -12,7 +12,9 @@
 	CoffeeScreen:
 		id:coffee
 		cup_size: control.size_text
-		h2o_temp:control.set_temp
+		h2o_ftemp:control.set_ftemp
+		h2o_ctemp:control.set_ctemp
+		pod_select:control.pod_text
 	ControlScreen:
 		id:control
 		
@@ -75,25 +77,15 @@
 				Label:
 					text:'Water Temp'
 					font_size:30
-				Label:
-					id:water_temp_disp
-					text: root.h2o_temp
+			
 				BoxLayout:
-					CheckBox:
-						id:ftemp
-						group:"temp"
-						active:True
-						on_active:root.c_to_f()
 					Label:
-						text:"F"
-						halign: 'left'
-					CheckBox:
-						id:ctemp
-						group:"temp"
-						on_active:root.f_to_c()
+						id:water_ftemp_disp
+						text: root.h2o_ftemp +u'\xb0 '+'F'
 					Label:
-						text:"C"
-						
+						id:water_ctemp_disp
+						text: root.h2o_ctemp +u'\xb0 '+'C'
+
 			BoxLayout:
 				orientation: 'vertical'
 				Label:
@@ -174,7 +166,7 @@
 					font_size:30
 				Label:
 					id:pod_color
-					text: "Some Color"
+					text: root.pod_select
 
 			BoxLayout:
 				orientation: 'vertical'
@@ -208,8 +200,13 @@
 				Label:
 					text:'Home Sensor'
 					font_size:30
-				Label:
-					text:"???????"
+				Light_indicator:
+					id:home_sensor
+					num:1
+					color1:'green'
+					pos_l1: 135,40
+					setting_on: False
+					size_lights:40,40
 
 
 			
@@ -269,7 +266,10 @@
 						show_label: True  # Show central label
 						show_marker: False  # Do not show surrounding marker
 					Label:
-						text:str(water_lv_knob.value)
+						text:""
+				BoxLayout:
+					Label:
+						text:str(round(water_lv_knob.value,2))
 
 			BoxLayout:
 				orientation: 'vertical'
@@ -280,14 +280,22 @@
 					orientation:'vertical'
 					Label:
 						id:my_temp
-						text: root.set_temp
+						text: root.set_ftemp +u'\xb0 '+'F'
 					BoxLayout:
+						Label:
+							text:""
 						Button:
+							size_hint:None,None
+							size:100,100
 							text:'-'
 							on_release:root.decrease_temp()
 						Button:
+							size_hint:None,None
+							size:100,100
 							text:'+'
 							on_release:root.increase_temp()
+						Label:
+							text:""
 						
 			BoxLayout:
 				orientation: 'vertical'
@@ -295,6 +303,8 @@
 					text:'Altitude Mode'
 					font_size:30
 				BoxLayout:
+					Label:
+						text:""
 					Button:
 						id:alt_mode_on
 						size_hint:None,None
@@ -307,12 +317,16 @@
 						size:100,100
 						text:"Off"
 						on_release:root.alt_mode_off()
+					Label:
+						text:""
 			BoxLayout:
 				orientation: 'vertical'
 				Label:
 					text:'Air Pump'
 					font_size:30
 				BoxLayout:
+					Label:
+						text:""
 					Button:
 						id:air_pump_on
 						size_hint:None,None
@@ -325,12 +339,16 @@
 						size:100,100
 						text:"Off"
 						on_release:root.turn_air_off()
+					Label:
+						text:""
 			BoxLayout:
 				orientation: 'vertical'
 				Label:
 					text:'Water Pump'
 					font_size:30
 				BoxLayout:
+					Label:
+						text:""
 					Button:
 						id:water_pump_on
 						size_hint:None,None
@@ -343,16 +361,25 @@
 						size:100,100
 						text:"Off"
 						on_release:root.turn_water_off()
+					Label:
+						text:""
 			BoxLayout:
 				orientation: 'vertical'
 				Label:
 					text:'Water Pumping Volume'
 					font_size:30
-				Spinner:
-					id:sizes
-					text: "4 oz"
-					values: '4 oz','6 oz','8 oz', '10 oz', '12 oz'
-					#on_release:root.disp_size()
+				BoxLayout:
+					Label:
+						text:""
+					Spinner:
+						id:sizes
+						size_hint:None,None
+						size:150,100
+						text: "4 oz"
+						values: '4 oz','6 oz','8 oz', '10 oz', '12 oz'
+						#on_release:root.disp_size()
+					Label:
+						text:""
 
 			BoxLayout:
 				orientation: 'vertical'
@@ -360,6 +387,8 @@
 					text:'Pod Door'
 					font_size:30
 				BoxLayout:
+					Label:
+						text:""
 					Button:
 						id:pod_door_open
 						size_hint:None,None
@@ -372,12 +401,16 @@
 						size:100,100
 						text:"Closed"
 						on_release:root.close_door()
+					Label:
+						text:""
 			BoxLayout:
 				orientation: 'vertical'
 				Label:
 					text:'Pod Present?'
 					font_size:30
 				BoxLayout:
+					Label:
+						text:""
 					Button:
 						id:pod_present
 						size_hint:None,None
@@ -390,14 +423,25 @@
 						size:100,100
 						text:"Missing"
 						on_release:root.remove_pod()
+					Label:
+						text:""
 			BoxLayout:
 				orientation: 'vertical'
 				Label:
 					text:'Pod Color'
 					font_size:30
-				Label:
-					id:pod_options
-					text: "Some Color"
+				BoxLayout:
+					Label:
+						text:""
+					Spinner:
+						id:pod_options
+						size_hint:None,None
+						size:150,100
+						text: "Blue"
+						values: 'Blue','Green','Orange', 'White', 'Black'
+						#on_release:root.disp_size()
+					Label:
+						text:""
 
 			BoxLayout:
 				orientation: 'vertical'
@@ -405,6 +449,8 @@
 					text:'Carafe Present?'
 					font_size:30
 				BoxLayout:
+					Label:
+						text:""
 					Button:
 						id:carafe_present
 						size_hint:None,None
@@ -417,12 +463,15 @@
 						size:100,100
 						text:"Missing"
 						on_release:root.remove_carafe()
+					Label:
+						text:""
 			BoxLayout:
 				orientation: 'vertical'
 				Label:
 					text:'LED Status'
 					font_size:30
 				BoxLayout:
+
 					Button:
 						id:led_off
 						size_hint:None,None
@@ -447,8 +496,23 @@
 				Label:
 					text:'Home Sensor'
 					font_size:30
-				Label:
-					text:"???????"
+				BoxLayout:
+					Label:
+						text:""
+					Button:
+						id:home_on
+						size_hint:None,None
+						size:100,100
+						text:"On"
+						on_release:root.home_on()
+					Button:
+						id:home_off
+						size_hint:None,None
+						size:100,100
+						text:"Off"
+						on_release:root.home_off()
+					Label:
+						text:""
 
 
 			

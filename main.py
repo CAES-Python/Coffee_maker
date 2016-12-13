@@ -55,7 +55,10 @@ class MenuScreen(Screen):
 	pass
 class CoffeeScreen(Screen):
 	cup_size = StringProperty('')
-	h2o_temp = StringProperty('')
+	pod_select = StringProperty('')
+	h2o_ftemp = StringProperty('')
+	h2o_ctemp = StringProperty('')
+
 	def __init__(self, **kwargs):
 			
 		super(CoffeeScreen, self).__init__(**kwargs)
@@ -64,9 +67,6 @@ class CoffeeScreen(Screen):
 
 	def _finish_init(self,dt):
 		self.water_lights=self.ids.water_lv_lights
-		self.temp = self.ids.water_temp_disp
-		self.ftemp= self.ids.ftemp
-		self.ctemp= self.ids.ctemp
 		self.alt_light= self.ids.altitude_light
 		self.air_light=self.ids.air_pump_light
 		self.water_pump=self.ids.water_pump_light
@@ -93,42 +93,31 @@ class CoffeeScreen(Screen):
 		self.led_off=self.manager.get_screen('control').ids.led_off
 		self.led_on=self.manager.get_screen('control').ids.led_on
 		self.led_flash=self.manager.get_screen('control').ids.led_flash
-		self.set_temp=self.manager.get_screen('control').set_temp
+#		self.set_temp=self.manager.get_screen('control').set_temp
+		self.temp_value=self.manager.get_screen('control').temp_value
+		self.my_temp=self.manager.get_screen('control').ids.my_temp
 
 
 
-	def f_to_c(self):
-
-		if self.ftemp.active==True:
-			self.set_temp= str((self.temp_value -32)/1.8)
-			print "temp is: ",self.set_temp 
-	def c_to_f(self):
-		if self.ctemp.active==True:
-			self.set_temp= str(self.temp_value * 1.8 +32)
-			print "temp is: ",self.set_temp 
 class ControlScreen(Screen):
 	global event
 	size_text=StringProperty("")
-	set_temp = StringProperty("")
-	min=NumericProperty(26)
+	pod_text = StringProperty("")
+	set_ftemp = StringProperty("")
+	set_ctemp = StringProperty("")
+	min=NumericProperty(80)
 	max=NumericProperty(212)
-	fmin=NumericProperty(80)
-	fmax=NumericProperty(212)
-	cmin=NumericProperty(26)
-	cmax=NumericProperty(100)
 	temp_value=NumericProperty(150)
 	def __init__(self, **kwargs):
 		
 		super(ControlScreen, self).__init__(**kwargs)
 		Clock.schedule_once(self._finish_init,0.5)
 		Clock.schedule_interval(self.disp_size,0.5)
+		Clock.schedule_interval(self.disp_pod,0.5)
 		Clock.schedule_interval(self.disp_temp,0.1)
 		Clock.schedule_interval(self.water_level,0.5)
 	def _finish_init(self,dt):
 		self.water_lights=self.manager.get_screen('coffee').ids.water_lv_lights
-		self.temp = self.manager.get_screen('coffee').ids.water_temp_disp
-		self.ftemp= self.manager.get_screen('coffee').ids.ftemp
-		self.ctemp= self.manager.get_screen('coffee').ids.ctemp
 		self.alt_light= self.manager.get_screen('coffee').ids.altitude_light
 		self.air_light= self.manager.get_screen('coffee').ids.air_pump_light
 		self.water_light=self.manager.get_screen('coffee').ids.water_pump_light
@@ -138,6 +127,7 @@ class ControlScreen(Screen):
 		self.carafe_light= self.manager.get_screen('coffee').ids.carafe_light
 		self.led_light= self.manager.get_screen('coffee').ids.led_light
 		self.pod_light= self.manager.get_screen('coffee').ids.pod_light
+		self.home_sensor = self.manager.get_screen('coffee').ids.home_sensor
 		self.water_value=self.ids.water_lv_knob.value 
 		self.alt_on=self.ids.alt_mode_on
 		self.alt_off=self.ids.alt_mode_off
@@ -156,9 +146,10 @@ class ControlScreen(Screen):
 		self.led_off=self.ids.led_off
 		self.led_on=self.ids.led_on
 		self.led_flash=self.ids.led_flash
+		self.my_temp= self.ids.my_temp
+		self.f_to_c()
 
 
-		#self.water_vol.bind(text=self.disp_size)
 	def alt_mode_on(self):
 		self.alt_light.turn_on_l1()
 	def alt_mode_off(self):
@@ -183,6 +174,11 @@ class ControlScreen(Screen):
 		self.carafe_light.color1='green'
 	def remove_carafe(self):
 		self.carafe_light.color1='red'
+
+	def home_on(self):
+		self.home_sensor.turn_on_l1()
+	def home_off(self):
+		self.home_sensor.turn_off_l1()
 	def LED_on(self):
 		try:
 			self.event.cancel()
@@ -205,6 +201,8 @@ class ControlScreen(Screen):
 			self.led_light.bol1=True
 	def disp_size(self,dt):
 		self.size_text=self.sizes.text
+	def disp_pod(self,dt):
+		self.pod_text = self.pod_options.text
 	def water_level(self,dt):
 		self.water_lights=self.manager.get_screen('coffee').ids.water_lv_lights
 		self.water_value=self.ids.water_lv_knob.value 
@@ -224,19 +222,37 @@ class ControlScreen(Screen):
 			self.water_lights.turn_on_l2()
 
 	def disp_temp(self,dt):
-		self.set_temp = str(self.temp_value)
+		self.set_ftemp = str(self.temp_value)
 
+	def f_to_c(self):
+
+		self.current_ctemp= str(round((self.temp_value -32)/1.8,1))
+		self.set_ctemp = self.current_ctemp
+		
+		
+		print "set_temp is: ",self.set_ftemp 
+		print "temp_val is: ",self.temp_value 
+		
 	def increase_temp(self):
+
+
 		if self.temp_value<self.max:
 			self.temp_value+=1
+			self.f_to_c()
+			
+
+			
+			print "set_temp is: ",self.set_ftemp 
+			print "temp_value is: ",self.temp_value 
 	def decrease_temp(self):
+		
 		if self.temp_value>self.min:
 			self.temp_value-=1
-
+			self.f_to_c()
 #Building the app. The program will look for the file "nuclear.kv" because the app is called Nuclear			
 class CoffeeApp(App):
 	def build(self):
-		Config.set('graphics','fullscreen', 1)
+		Config.set('graphics','fullscreen', True)
 		return CoffeeScreenManager()
 # Run the program
 if __name__ == "__main__":

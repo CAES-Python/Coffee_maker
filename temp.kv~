@@ -1,0 +1,105 @@
+#: import MeshLinePlot kivy.garden.graph.MeshLinePlot
+<Runner>:
+	#Handling the gesture event.
+	on_two_left_to_right_line:   app.root.transition.direction = 'right'
+	on_two_right_to_left_line:  app.root.transition.direction = 'left'
+	on_two_down_to_up_line:  app.root.transition.direction = 'up'
+# Layout the Screen Manager
+<CoffeeScreenManager>:
+	id: manager
+	MenuScreen:
+		id:menu	
+	CoffeeScreen:
+		id:coffee
+		h2o_ftemp:control.set_ftemp
+		h2o_ctemp:control.set_ctemp
+	ControlScreen:
+		id:control
+		
+# Layout the Menu screen
+<MenuScreen>:
+	name: 'menu'
+
+	BoxLayout:
+		orientation: 'vertical'
+		Label:
+			text:'Welcome to the Menu!'
+			font_size:50
+		BoxLayout:
+			
+			Button:
+				text:'Coffee Maker'
+				font_size:30
+				on_release:app.root.current ='coffee'
+
+# Layout the NCP screen		
+
+<CoffeeScreen>:
+	name:'coffee'
+	Runner: 
+		on_two_down_to_up_line: app.root.current = 'menu'
+		on_two_right_to_left_line: app.root.current = 'control'
+		
+	BoxLayout:
+		orientation: 'vertical'
+		Label: 
+			text: 'Temp Status'
+			font_size:45
+		
+
+		BoxLayout:
+				
+			BoxLayout:
+				orientation: 'vertical'
+				Label:
+					text:'Water Temp'
+					font_size:30
+				BoxLayout:
+					Label:
+						id:water_ftemp_disp
+						text: root.h2o_ftemp +u'\xb0 '+'F'
+					Label:
+						id:water_ctemp_disp
+						text: root.h2o_ctemp +u'\xb0 '+'C'
+
+
+			
+
+
+<ControlScreen>:
+	name:'control'
+	Runner: 
+		on_two_down_to_up_line: app.root.current = 'menu'
+		on_two_left_to_right_line: app.root.current = 'coffee'
+
+	BoxLayout:
+		orientation: 'vertical'
+		BoxLayout:
+			size_hint: 1,0.5
+			Label: 
+				text: 'Coffee Control'
+				font_size:45
+		
+		
+
+			BoxLayout:
+				orientation: 'vertical'
+				Label:
+					text:'Water Temp'
+					font_size:30
+				BoxLayout:
+					orientation:'vertical'
+					Label:
+						id:my_temp
+						text: root.set_ftemp +u'\xb0 '+'F'
+					BoxLayout:
+						Button:
+							text:'-'
+							on_release:root.decrease_temp()
+						Button:
+							text:'+'
+							on_release:root.increase_temp()
+						
+			
+
+
