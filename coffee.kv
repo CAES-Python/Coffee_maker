@@ -11,7 +11,7 @@
 		id:menu	
 	CoffeeScreen:
 		id:coffee
-		cup_size: control.size_text
+		cup_size: control.size_text+' oz'
 		h2o_ftemp:control.set_ftemp
 		h2o_ctemp:control.set_ctemp
 		pod_select:control.pod_text
@@ -82,9 +82,11 @@
 					Label:
 						id:water_ftemp_disp
 						text: root.h2o_ftemp +u'\xb0 '+'F'
+						font_size:30
 					Label:
 						id:water_ctemp_disp
 						text: root.h2o_ctemp +u'\xb0 '+'C'
+						font_size:30
 
 			BoxLayout:
 				orientation: 'vertical'
@@ -132,6 +134,7 @@
 				Label:
 					id: water_vol
 					text:root.cup_size
+					font_size:30
 
 			BoxLayout:
 				orientation: 'vertical'
@@ -167,6 +170,7 @@
 				Label:
 					id:pod_color
 					text: root.pod_select
+					font_size:30
 
 			BoxLayout:
 				orientation: 'vertical'
@@ -269,7 +273,8 @@
 						text:""
 				BoxLayout:
 					Label:
-						text:str(round(water_lv_knob.value,2))
+						text:str(round(water_lv_knob.value,2))+'%'
+						font_size:25
 
 			BoxLayout:
 				orientation: 'vertical'
@@ -281,6 +286,9 @@
 					Label:
 						id:my_temp
 						text: root.set_ftemp +u'\xb0 '+'F'
+						font_size:30
+					Label:
+						text:''
 					BoxLayout:
 						Label:
 							text:""
@@ -305,18 +313,14 @@
 				BoxLayout:
 					Label:
 						text:""
+
 					Button:
-						id:alt_mode_on
+						id:alt_on_off
 						size_hint:None,None
 						size:100,100
-						text:"On"
-						on_release:root.alt_mode_on()
-					Button:
-						id:alt_mode_off
-						size_hint:None,None
-						size:100,100
-						text:"Off"
-						on_release:root.alt_mode_off()
+						text:"On/Off"
+						on_release:root.alt_mode_on_off()
+
 					Label:
 						text:""
 			BoxLayout:
@@ -327,18 +331,14 @@
 				BoxLayout:
 					Label:
 						text:""
+
 					Button:
-						id:air_pump_on
+						id:air_pump_on_off
 						size_hint:None,None
 						size:100,100
-						text:"On"
-						on_release:root.turn_air_on()
-					Button:
-						id:air_pump_off
-						size_hint:None,None
-						size:100,100
-						text:"Off"
-						on_release:root.turn_air_off()
+						text:"On/Off"
+						on_release:root.turn_air_on_off()
+
 					Label:
 						text:""
 			BoxLayout:
@@ -349,18 +349,15 @@
 				BoxLayout:
 					Label:
 						text:""
+
+
 					Button:
-						id:water_pump_on
+						id:water_pump_on_off
 						size_hint:None,None
 						size:100,100
-						text:"On"
-						on_release:root.turn_water_on()
-					Button:
-						id:water_pump_off
-						size_hint:None,None
-						size:100,100
-						text:"Off"
-						on_release:root.turn_water_off()
+						text:"On/Off"
+						on_release:root.turn_water_on_off()
+
 					Label:
 						text:""
 			BoxLayout:
@@ -369,17 +366,29 @@
 					text:'Water Pumping Volume'
 					font_size:30
 				BoxLayout:
+				
+					orientation:'vertical'
 					Label:
-						text:""
-					Spinner:
-						id:sizes
-						size_hint:None,None
-						size:150,100
-						text: "4 oz"
-						values: '4 oz','6 oz','8 oz', '10 oz', '12 oz'
-						#on_release:root.disp_size()
+						id:my_size
+						text: root.size_text +' oz'
+						font_size:30
 					Label:
-						text:""
+						text:''
+					BoxLayout:
+						Label:
+							text:""
+						Button:
+							size_hint:None,None
+							size:100,100
+							text:'-'
+							on_release:root.decrease_size()
+						Button:
+							size_hint:None,None
+							size:100,100
+							text:'+'
+							on_release:root.increase_size()
+						Label:
+							text:""
 
 			BoxLayout:
 				orientation: 'vertical'
@@ -389,18 +398,14 @@
 				BoxLayout:
 					Label:
 						text:""
+
 					Button:
-						id:pod_door_open
+						id:pod_door_open_close
 						size_hint:None,None
 						size:100,100
-						text:"Open"
-						on_release:root.open_door()
-					Button:
-						id:pod_door_closed
-						size_hint:None,None
-						size:100,100
-						text:"Closed"
-						on_release:root.close_door()
+						text:"Open/Closed"
+						on_release:root.open_close_door()
+
 					Label:
 						text:""
 			BoxLayout:
@@ -411,18 +416,14 @@
 				BoxLayout:
 					Label:
 						text:""
+
 					Button:
-						id:pod_present
+						id:pod_present_missing
 						size_hint:None,None
 						size:100,100
-						text:"Present"
-						on_release:root.insert_pod()
-					Button:
-						id:pod_missing
-						size_hint:None,None
-						size:100,100
-						text:"Missing"
-						on_release:root.remove_pod()
+						text:"Present/\n Missing"
+						on_release:root.insert_remove_pod()
+
 					Label:
 						text:""
 			BoxLayout:
@@ -451,18 +452,14 @@
 				BoxLayout:
 					Label:
 						text:""
+
 					Button:
-						id:carafe_present
+						id:carafe_present_missing
 						size_hint:None,None
 						size:100,100
-						text:"Present"
-						on_release:root.insert_carafe()
-					Button:
-						id:carafe_missing
-						size_hint:None,None
-						size:100,100
-						text:"Missing"
-						on_release:root.remove_carafe()
+						text:"Present/\n Missing"
+						on_release:root.insert_remove_carafe()
+
 					Label:
 						text:""
 			BoxLayout:
@@ -499,18 +496,14 @@
 				BoxLayout:
 					Label:
 						text:""
+
 					Button:
-						id:home_on
+						id:home_on_off
 						size_hint:None,None
 						size:100,100
-						text:"On"
-						on_release:root.home_on()
-					Button:
-						id:home_off
-						size_hint:None,None
-						size:100,100
-						text:"Off"
-						on_release:root.home_off()
+						text:"On/Off"
+						on_release:root.home_on_off()
+
 					Label:
 						text:""
 

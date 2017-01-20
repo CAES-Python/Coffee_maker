@@ -50,7 +50,7 @@ class GestureBox(BoxLayout):
 			touch.ud['gesture_path'].append((touch.x, touch.y))
 		except:
 			print "gesture not found"
-			continue
+			#continue
 		super(GestureBox, self).on_touch_move(touch)
 
 	def on_touch_up(self, touch):
@@ -65,10 +65,10 @@ class GestureBox(BoxLayout):
 				#minscore to be attained for a match to be true
 				match = gestures.find(gesture, minscore=0.3)
 				if match:
-					print("{} happened".format(match[1].name))
+					#print("{} happened".format(match[1].name))
 					self.dispatch('on_{}'.format(match[1].name))
 				else:
-					print "Nothing to see Here"
+					pass #print "Nothing to see Here"
 		except:
 			print "gesture not found"
 

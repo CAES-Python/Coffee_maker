@@ -65,12 +65,12 @@ class GestureBox(BoxLayout):
 				#minscore to be attained for a match to be true
 				match = gestures.find(gesture, minscore=0.3)
 				if match:
-					print("{} happened".format(match[1].name))
+					#print("{} happened".format(match[1].name))
 					self.dispatch('on_{}'.format(match[1].name))
 				else:
-					print "Nothing to see Here"
+					pass #print "Nothing to see Here"
 		except:
-			print "gesture not found"
+			pass #print "gesture not found"
 
 		super(GestureBox, self).on_touch_up(touch)
 
