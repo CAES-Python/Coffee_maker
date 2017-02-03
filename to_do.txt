@@ -1,1 +1,1 @@
-add water speed, Filter sensor
+add Filter sensor

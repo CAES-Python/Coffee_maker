@@ -12,11 +12,14 @@
 	CoffeeScreen:
 		id:coffee
 		cup_size: control.size_text+' oz'
+		h2o_rate: control2.rate_text+' oz/s'
 		h2o_ftemp:control.set_ftemp
 		h2o_ctemp:control.set_ctemp
 		pod_select:control.pod_text
 	ControlScreen:
 		id:control
+	ControlScreen2:
+		id:control2
 		
 # Layout the Menu screen
 <MenuScreen>:
@@ -41,15 +44,21 @@
 	Runner: 
 		on_two_down_to_up_line: app.root.current = 'menu'
 		on_two_right_to_left_line: app.root.current = 'control'
-		
+		on_two_left_to_right_line: app.root.current = 'control2'
 	BoxLayout:
-		orientation: 'vertical'
-		Label: 
-			text: 'Coffee Status'
-			font_size:45
+
+		orientation: 'vertical'		
+		BoxLayout:
+
+			size_hint: 1, 0.25
+			orientation: 'vertical'
+			Label: 
+				text: 'Coffee Status'
+				font_size:45
+	
 		
 		GridLayout:
-			rows:2
+			rows:3
 			cols:6
 			BoxLayout:
 				orientation: 'vertical'
@@ -211,6 +220,66 @@
 					pos_l1: 135,40
 					setting_on: False
 					size_lights:40,40
+			BoxLayout:
+				orientation: 'vertical'
+				size_hint:1,0.5
+				Label:
+					text:'Water Pumping Rate'
+					font_size:30
+				Label:
+					id: water_vol
+					text:root.h2o_rate
+					font_size:30
+			BoxLayout:
+				orientation: 'vertical'
+				size_hint:1,0.5
+				Label:
+					text:'Water Pumping Rate'
+					font_size:30
+				Label:
+					id: water_vol
+					text:root.h2o_rate
+					font_size:30
+			BoxLayout:
+				orientation: 'vertical'
+				size_hint:1,0.5
+				Label:
+					text:'Water Pumping Rate'
+					font_size:30
+				Label:
+					id: water_vol
+					text:root.h2o_rate
+					font_size:30
+			BoxLayout:
+				orientation: 'vertical'
+				size_hint:1,0.5
+				Label:
+					text:'Water Pumping Rate'
+					font_size:30
+				Label:
+					id: water_vol
+					text:root.h2o_rate
+					font_size:30
+			BoxLayout:
+				orientation: 'vertical'
+				size_hint:1,0.5
+				Label:
+					text:'Water Pumping Rate'
+					font_size:30
+				Label:
+					id: water_vol
+					text:root.h2o_rate
+					font_size:30
+			BoxLayout:
+				orientation: 'vertical'
+				size_hint:1,0.5
+				Label:
+					text:'Water Pumping Rate'
+					font_size:30
+				Label:
+					id: water_vol
+					text:root.h2o_rate
+					font_size:30
 
 
 			
@@ -233,23 +302,28 @@
 							pos:self.pos
 							size: self.size
 
-
+			
 <ControlScreen>:
 	name:'control'
 	Runner: 
 		on_two_down_to_up_line: app.root.current = 'menu'
 		on_two_left_to_right_line: app.root.current = 'coffee'
+		on_two_right_to_left_line: app.root.current = 'control2'
 
-	BoxLayout:
-		orientation: 'vertical'
 		BoxLayout:
-			size_hint: 1,0.5
+
+		orientation: 'vertical'		
+		BoxLayout:
+
+			size_hint: 1, 0.25
+			orientation: 'vertical'
 			Label: 
 				text: 'Coffee Control'
 				font_size:45
+	
 		
 		GridLayout:
-			rows:2
+			rows:3
 			cols:6
 			BoxLayout:
 				orientation: 'vertical'
@@ -259,16 +333,21 @@
 				BoxLayout:
 					Label:
 						text:""
-					Knob:
+#					Knob:
+#						id:water_lv_knob
+#						size: 100, 100
+#						min: 0
+#						max: 100
+#						step: 1
+#						value: 0  # Default position of knob.
+#						knobimg_source: "/home/nagato/.kivy/garden/garden.knob/img/knob_metal.png"  # Knob texture
+#						show_label: True  # Show central label
+#						show_marker: False  # Do not show surrounding marker
+					Slider:
 						id:water_lv_knob
-						size: 100, 100
-						min: 0
-						max: 100
-						step: 1
-						value: 0  # Default position of knob.
-						knobimg_source: "/home/nagato/.kivy/garden/garden.knob/img/knob_metal.png"  # Knob texture
-						show_label: True  # Show central label
-						show_marker: False  # Do not show surrounding marker
+						orientation:'vertical'
+						max:100
+						value:20
 					Label:
 						text:""
 				BoxLayout:
@@ -502,12 +581,61 @@
 						size_hint:None,None
 						size:100,100
 						text:"On/Off"
-						on_release:root.home_on()
+						on_release:root.home_on_off()
 
 					Label:
 						text:""
+<ControlScreen2>:
+	name:'control2'
+	Runner: 
+		on_two_down_to_up_line: app.root.current = 'menu'
+		on_two_left_to_right_line: app.root.current = 'control'
+		on_two_right_to_left_line: app.root.current = 'coffee'
 
+	BoxLayout:
 
-			
+		orientation: 'vertical'		
+		BoxLayout:
+
+			size_hint: 1, 0.25
+			orientation: 'vertical'
+			Label: 
+				text: 'More Control'
+				font_size:45
+	
+		
+		GridLayout:
+			rows:3
+			cols:6
+			BoxLayout:
+				orientation: 'vertical'
+				Label:
+					text:'Water Pumping Rate'
+					font_size:30
+				BoxLayout:
+				
+					orientation:'vertical'
+					Label:
+						id:my_rate
+						text: root.rate_text +' oz/s'
+						font_size:30
+					Label:
+						text:''
+					BoxLayout:
+						Label:
+							text:""
+						Button:
+							size_hint:None,None
+							size:100,100
+							text:'-'
+							on_release:root.decrease_rate()
+						Button:
+							size_hint:None,None
+							size:100,100
+							text:'+'
+							on_release:root.increase_rate()
+						Label:
+							text:""
+
 
 

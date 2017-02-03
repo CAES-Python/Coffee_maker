@@ -14,17 +14,14 @@ from kivy.lang import Builder
 
 from kivy.uix.scatter import Scatter
 from kivy.uix.label import Label
-from kivy.uix.floatlayout import FloatLayout
 from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.gridlayout import GridLayout
 from kivy.uix.slider import Slider
 from kivy.uix.screenmanager import ScreenManager, Screen
-from kivy.uix.anchorlayout import AnchorLayout
 from kivy.uix.checkbox import CheckBox
 from kivy.uix.spinner import Spinner
 
-from kivy.garden.knob import Knob
-from kivy.garden.gauges import Gauges
+
 from kivy.garden.light_indicator import  Light_indicator
 
 from kivy.properties import NumericProperty, BoundedNumericProperty, ListProperty, ObjectProperty, StringProperty
@@ -58,9 +55,32 @@ class CoffeeScreen(Screen):
 	pod_select = StringProperty('')
 	h2o_ftemp = StringProperty('')
 	h2o_ctemp = StringProperty('')
-
+	h2o_rate = StringProperty('')
 	def __init__(self, **kwargs):			
 		super(CoffeeScreen, self).__init__(**kwargs)
+class ControlScreen2(Screen):
+	
+	rate_text=StringProperty("")
+	rate_value=NumericProperty(1)
+	min_rate =NumericProperty(0.25)
+	max_rate =NumericProperty(3)
+
+	def __init__(self, **kwargs):
+		
+		super(ControlScreen2, self).__init__(**kwargs)
+		Clock.schedule_interval(self.disp_rate,0.1)
+			
+	def increase_rate(self):
+		if self.rate_value<self.max_rate:
+			self.rate_value+=0.25
+
+	def decrease_rate(self):
+		
+		if self.rate_value>self.min_rate:
+			self.rate_value-=0.25
+
+	def disp_rate(self,dt):
+		self.rate_text=str(self.rate_value)
 
 class ControlScreen(Screen):
 	global event
@@ -74,6 +94,7 @@ class ControlScreen(Screen):
 	size_value=NumericProperty(6)
 	min_size =NumericProperty(4)
 	max_size =NumericProperty(14)
+
 	def __init__(self, **kwargs):
 		
 		super(ControlScreen, self).__init__(**kwargs)
@@ -185,6 +206,7 @@ class ControlScreen(Screen):
 	def disp_size(self,dt):
 		self.size_text=str(self.size_value)
 
+
 	def disp_pod(self,dt):
 		self.pod_text = self.pod_options.text
 
@@ -231,7 +253,7 @@ class ControlScreen(Screen):
 		
 		if self.size_value>self.min_size:
 			self.size_value-=0.5
-			
+
 #Building the app. The program will look for the file "coffee.kv" because the app is called Coffee			
 class CoffeeApp(App):
 	def build(self):
