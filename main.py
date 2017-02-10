@@ -68,8 +68,14 @@ class ControlScreen2(Screen):
 	def __init__(self, **kwargs):
 		
 		super(ControlScreen2, self).__init__(**kwargs)
+		Clock.schedule_once(self._finish_init)
 		Clock.schedule_interval(self.disp_rate,0.1)
 			
+	def _finish_init(self,dt):
+		self.filter_sensor = self.manager.get_screen('coffee').ids.filter_sensor
+		self.filter_label = self.ids.filter_label
+		self.filter_status = False
+
 	def increase_rate(self):
 		if self.rate_value<self.max_rate:
 			self.rate_value+=0.25
@@ -81,6 +87,15 @@ class ControlScreen2(Screen):
 
 	def disp_rate(self,dt):
 		self.rate_text=str(self.rate_value)
+	def filter_on_off(self):
+		if self.filter_status == False:
+			self.filter_sensor.turn_on_l1()
+			self.filter_status = True
+			self.filter_label.text = "On"
+		else:
+			self.filter_sensor.turn_off_l1()
+			self.filter_status = False
+			self.filter_label.text = "Off"
 
 class ControlScreen(Screen):
 	global event
@@ -123,62 +138,81 @@ class ControlScreen(Screen):
 		self.pod_status=False
 		self.carafe_status=False
 		self.home_status=False
+		self.alt_label = self.ids.alt_mode_label
+		self.air_label = self.ids.air_label
+		self.h2o_label = self.ids.h2o_label
+		self.door_label = self.ids.door_label
+		self.pod_label = self.ids.pod_label
+		self.carafe_label = self.ids.carafe_label
+		self.home_label = self.ids.home_label
 
 	def alt_mode_on_off(self):
 		if self.alt_status == False:
 			self.alt_light.turn_on_l1()
 			self.alt_status = True
+			self.alt_label.text = "On"
 		else:
 			self.alt_light.turn_off_l1()
-			self.alt_status = False
+			self.alt_status = False			
+			self.alt_label.text = "Off"
 
 	def turn_air_on_off(self):
 		if self.air_status == False:
 			self.air_light.turn_on_l1()
 			self.air_status = True
+			self.air_label.text = "On"
 		else:
 			self.air_light.turn_off_l1()
 			self.air_status = False
+			self.air_label.text = "Off"
 
 	def turn_water_on_off(self):
 		if self.water_status == False:
 			self.water_light.turn_on_l1()
 			self.water_status = True
+			self.h2o_label.text = "On"
 		else:
 			self.water_light.turn_off_l1()
 			self.water_status = False
+			self.h2o_label.text = "Off"
 
 
 	def open_close_door(self):
 		if self.door_status == False:
 			self.door_light.color1='green'
 			self.door_status =True
+			self.door_label.text = "Closed"
 		else:
 			self.door_light.color1='red'
 			self.door_status =False
-
+			self.door_label.text = "Open"
 	def insert_remove_pod(self):
 		if self.pod_status==False:
 			self.pod_light.color1='green'
 			self.pod_status=True
+			self.pod_label.text = "Present"
 		else:
 			self.pod_light.color1='red'
 			self.pod_status = False
-		
+			self.pod_label.text = "Missing"
 	def insert_remove_carafe(self):
 		if self.carafe_status == False:
 			self.carafe_light.color1='green'
 			self.carafe_status = True
+			self.carafe_label.text = "Present"
 		else:
 			self.carafe_light.color1='red'
 			self.carafe_status = False
+			self.carafe_label.text = "Missing"
 	def home_on_off(self):
 		if self.home_status == False:
 			self.home_sensor.turn_on_l1()
 			self.home_status = True
+			self.home_label.text = "On"
 		else:
 			self.home_sensor.turn_off_l1()
 			self.home_status = False
+			self.home_label.text = "Off"
 
 	def LED_on(self):
 		try:
