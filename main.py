@@ -229,7 +229,11 @@ class ControlScreen(Screen):
 		self.led_light.turn_off_l1()
 
 	def LED_flash(self):
-		self.event=Clock.schedule_interval(self.flash,0.1)
+		try:
+			self.event.cancel()
+		except:
+			pass	
+		self.event=Clock.schedule_interval(self.flash,1)
 
 	def flash(self,dt):
 		if self.led_light.bol1==True:
