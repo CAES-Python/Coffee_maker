@@ -38,6 +38,9 @@ from math import *
 
 import gesture_box as gesture
 
+#These next Libraries are needed to command the machine to do something. Needs to be in the same folder.
+# from <files_to_Run> import *
+
 # This is where Kivy captures gestures.
 class Runner(gesture.GestureBox):
 	pass
